@@ -9,7 +9,15 @@
 	</head>
 	<body onload="draw()">
 		<h1>Random Walker</h1>
-		<canvas id="stage" width="500" height="500"></canvas>
+		<div class="flex-container">
+			<form class="form-container">
+				<label for="number-points">Number of participants</label>
+				<input id="number-points" type="text">
+				<button type="submit">Apply!</button>
+			</form>
+			<canvas id="stage" width="500" height="500"></canvas>
+		</div>
 	</body>
+	<script src="person.class.js"></script>
 	<script src="index.js"></script>
 </html>
