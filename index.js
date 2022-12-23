@@ -84,7 +84,7 @@ class Person {
 			this.vy += this.amountY;
 		}
 	}
-	checkCollision() {
+	checkWallsCollision() {
 		if (!this.isInsideBordersY()) {
 			this.collisionY();
 		}
@@ -151,55 +151,10 @@ function draw() {
 	context.clearRect(0, 0, canvas.width, canvas.height);
 	p1.draw();
 	p2.draw();
-	// Define movement between 0 and 3
-
-	// switch (movementOption) {
-	// 	case 0: // up
-	// 		p1.moveUpRight();
-	// 		p2.moveUpRight();
-	// 		break;
-	// 	case 1: // down
-	// 		p1.moveUpLeft();
-	// 		p2.moveUpLeft();
-	// 		break;
-	// 	case 2: // right
-	// 		p1.moveDownLeft();
-	// 		p2.moveDownLeft();
-	// 		break;
-	// 	case 3: // left
-	// 		p1.moveDownRight();
-	// 		p2.moveDownRight();
-	// 		break;
-	// 	default:
-	// 		p1.moveLeft();
-	// 		p2.moveLeft();
-	// 		break;
-	// }
 	p1.moveRandomly();
 	p2.moveRandomly();
-	p1.checkCollision();
-	p2.checkCollision();
+	p1.checkWallsCollision();
+	p2.checkWallsCollision();
 
 	window.requestAnimationFrame(draw);
-}
-
-/**
- *
- * @param {CanvasRenderingContext2D} ctx
- * @param {HTMLCanvasElement} targetCanvas
- */
-function animate(ctx, targetCanvas) {
-	const canvasSize = targetCanvas?.height || 0;
-
-	for (let i = 0; i < SAMPLES; i++) {
-		const randomXPosition = (canvasSize - SQUARE_SIZE) * Math.random();
-		const randomYPosition = (canvasSize - SQUARE_SIZE) * Math.random();
-		ctx.fillRect(
-			randomXPosition,
-			randomYPosition,
-			SQUARE_SIZE,
-			SQUARE_SIZE
-		);
-		ctx.translate(randomXPosition + 1, randomYPosition + 1);
-	}
 }
