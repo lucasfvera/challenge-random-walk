@@ -10,11 +10,12 @@
 	<body onload="draw()">
 		<h1>Random Walker</h1>
 		<div class="flex-container">
-			<form class="form-container">
-				<label for="number-points">Number of participants</label>
-				<input id="number-points" type="text">
+			<form id="participants-form" class="form-container">
+				<label for="number-of-participants">Number of participants</label>
+				<input id="number-of-participants" type="text">
 				<button type="submit">Apply!</button>
 			</form>
+			<h2>Number of walkers: <span id="number-of-walkers"></span></h2>
 			<canvas id="stage" width="500" height="500"></canvas>
 		</div>
 	</body>
