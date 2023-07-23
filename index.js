@@ -10,29 +10,31 @@ const form = document.getElementById('participants-form');
 
 let persons = {};
 
-let PERSONS = 1;
+let NUMBER_OF_PERSONS = 1;
 
 function createNPersons(n = 1){
-	console.log(`Creating ${PERSONS} persons`)
+	console.log(`Creating ${NUMBER_OF_PERSONS} persons`)
 	for(let i = 0; i < n; i++){
-		persons[i] = new Person(canvas)
+		// Random color assign
+		const type = Math.floor(3 * Math.random())
+		persons[i] = new Person(canvas, type)
 	}
 }
 
 function init(){
-	createNPersons(PERSONS);
+	createNPersons(NUMBER_OF_PERSONS);
 }
 
 function draw() {
-	if(PERSONS <= 0){
+	if(NUMBER_OF_PERSONS <= 0){
 		return
 	}
-	console.log(PERSONS)
 	context.clearRect(0, 0, canvas.width, canvas.height);
-	for(let i = 0; i < PERSONS; i++){
+	for(let i = 0; i < NUMBER_OF_PERSONS; i++){
 		persons[i].draw()
 		persons[i].moveRandomly()
 		persons[i].checkWallsCollision()
+		persons[i].checkPersonCollision(persons)
 	}
 
 	window.requestAnimationFrame(draw);
@@ -42,9 +44,9 @@ function processForm(e) {
     if (e.preventDefault) e.preventDefault();
 	const input = document.getElementById("number-of-participants")
 	if(!Number.isNaN(Number(input.value)) && input.value !== ''){
-		PERSONS = Number(input.value)
+		NUMBER_OF_PERSONS = Number(input.value)
 		span.innerHTML = input.value
-		createNPersons(PERSONS);
+		createNPersons(NUMBER_OF_PERSONS);
 	}
 
     // You must return false to prevent the default form behavior
