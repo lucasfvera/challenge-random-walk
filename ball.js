@@ -1,5 +1,5 @@
-const canvas = document.getElementById('stage');
-const ctx = canvas.getContext('2d');
+import { canvas, context as ctx } from './canvas';
+
 let raf;
 
 const ball = {

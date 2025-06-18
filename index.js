@@ -1,29 +1,48 @@
-const SAMPLES = 1;
-const SQUARE_SIZE = 10;
-const DISTANCE = 2;
-
-/**
- * @type {(HTMLCanvasElement|null)}
- */
-const canvas = document.getElementById('stage');
-const context = canvas.getContext('2d');
+import { canvas, context, SQUARE_SIZE } from './canvas.js';
 
 class Person {
-	randomXPosition = (canvas?.width - SQUARE_SIZE) * Math.random();
-	randomYPosition = (canvas?.height - SQUARE_SIZE) * Math.random();
-
-	constructor() {
+	/**
+	 * Represents a Person.
+	 * @constructor
+	 * @param {HTMLCanvasElement} canvas - The target canvas to render the person
+	 */
+	constructor(canvas) {
+		/**
+		 *  @type {HTMLCanvasElement}
+		 */
+		this.canvas = canvas;
+		/**
+		 *  @type {number}
+		 */
 		this.size = SQUARE_SIZE;
-		this.x = this.randomXPosition;
-		this.y = this.randomYPosition;
+		/**
+		 *  @type {number}
+		 */
+		this.x = (this.canvas.width - SQUARE_SIZE) * Math.random();
+		/**
+		 *  @type {number}
+		 */
+		this.y = (this.canvas.height - SQUARE_SIZE) * Math.random();
+		/**
+		 *  @type {number}
+		 */
 		this.vx = 20;
+		/**
+		 *  @type {number}
+		 */
 		this.vy = 20;
+		/**
+		 *  @type {number}
+		 */
 		this.amountX = 0.2;
+		/**
+		 *  @type {number}
+		 */
 		this.amountY = 0.1;
 	}
 
 	draw() {
-		context.fillRect(this.x, this.y, this.size, this.size);
+		context?.fillRect(this.x, this.y, this.size, this.size);
 	}
 
 	moveUp() {
@@ -96,19 +115,19 @@ class Person {
 		return this.x - this.vx > 0;
 	}
 	canMoveRight() {
-		return this.x + this.size + this.vx < canvas?.width;
+		return this.x + this.size + this.vx < this.canvas.width;
 	}
 	canMoveUp() {
 		return this.y - this.vy > 0;
 	}
 	canMoveDown() {
-		return this.y + this.size + this.vy < canvas?.width;
+		return this.y + this.size + this.vy < this.canvas.width;
 	}
 	isInsideBordersX() {
-		return this.x + this.size < canvas?.width && this.x > 0;
+		return this.x + this.size < this.canvas.width && this.x > 0;
 	}
 	isInsideBordersY() {
-		return this.y + this.size < canvas?.height && this.y > 0;
+		return this.y + this.size < this.canvas.height && this.y > 0;
 	}
 	moveRandomly() {
 		const movementOption = Math.floor(8 * Math.random());
@@ -144,11 +163,17 @@ class Person {
 }
 
 const movementOption = Math.floor(4 * Math.random());
-const p1 = new Person();
-const p2 = new Person();
+const p1 = canvas && new Person(canvas);
+const p2 = canvas && new Person(canvas);
 
 function draw() {
-	context.clearRect(0, 0, canvas.width, canvas.height);
+	if (!p1 || !p2) {
+		throw new Error('Persons were not defined');
+	}
+	if (!canvas) {
+		throw new Error('Canvas is not defined');
+	}
+	context?.clearRect(0, 0, canvas.width, canvas.height);
 	p1.draw();
 	p2.draw();
 	p1.moveRandomly();
@@ -158,3 +183,5 @@ function draw() {
 
 	window.requestAnimationFrame(draw);
 }
+
+window.draw = draw;
